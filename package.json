@@ -1,0 +1,17 @@
+{
+  "name": "mediqueue-opd-system",
+  "version": "2.0.0",
+  "description": "MediQueue - Complete Hospital OPD Management System",
+  "private": true,
+  "scripts": {
+    "setup": "cd backend && npm install && cd ../frontend && npm install",
+    "start:backend": "cd backend && node server.js",
+    "start:frontend": "cd frontend && npm start",
+    "start": "concurrently --names \"BACKEND,FRONTEND\" --prefix-colors \"blue,green\" \"cd backend && node server.js\" \"cd frontend && npm start\"",
+    "dev": "concurrently --names \"BACKEND,FRONTEND\" --prefix-colors \"blue,green\" \"cd backend && npm run dev\" \"cd frontend && npm start\"",
+    "build:frontend": "cd frontend && npm run build"
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

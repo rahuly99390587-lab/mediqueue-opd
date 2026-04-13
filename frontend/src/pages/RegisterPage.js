@@ -83,6 +83,16 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand-900 via-brand-800 to-teal-800 flex flex-col">
+    
+  {/* 🔥 ADMIN LOGIN BUTTON */}
+<div className="absolute top-4 right-4 z-50">
+  <button
+    onClick={() => navigate("/admin/login")}
+  className="px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg shadow-lg hover:scale-105 transition"
+  >
+    Admin Login
+  </button>
+</div>
 
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

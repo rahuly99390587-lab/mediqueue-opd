@@ -4,7 +4,8 @@ import axios from 'axios';
 // Set REACT_APP_API_URL in .env for local or production
 // Local:       REACT_APP_API_URL=http://localhost:5001
 // Production:  REACT_APP_API_URL=https://your-backend.railway.app
-const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001';
+const BASE_URL = process.env.REACT_APP_API_URL ;
+console.log("API URL:", BASE_URL);
 
 // ─── AXIOS INSTANCE ────────────────────────────────────────────────────────
 const api = axios.create({

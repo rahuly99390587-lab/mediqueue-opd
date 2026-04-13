@@ -245,19 +245,25 @@ app.get('/api/dashboard', requireAuth, async (req, res) => {
 
     // Age distribution (NO CHANGE needed)
     const ageGroups = await dbAll(`
-      SELECT
-        CASE
-          WHEN age < 13 THEN 'Children (0-12)'
-          WHEN age < 18 THEN 'Teens (13-17)'
-          WHEN age < 35 THEN 'Young Adults (18-34)'
-          WHEN age < 60 THEN 'Adults (35-59)'
-          ELSE 'Seniors (60+)'
-        END as name,
-        COUNT(*) as value
-      FROM patients
-      WHERE age IS NOT NULL AND age > 0
-      GROUP BY name
-      ORDER BY MIN(age)
+    SELECT
+  CASE
+    WHEN age < 13 THEN 'Children (0-12)'
+    WHEN age < 18 THEN 'Teens (13-17)'
+    WHEN age < 35 THEN 'Young Adults (18-34)'
+    WHEN age < 60 THEN 'Adults (35-59)'
+    ELSE 'Seniors (60+)'
+  END as name,
+  COUNT(*) as value
+FROM patients
+WHERE age IS NOT NULL AND age > 0
+GROUP BY
+  CASE
+    WHEN age < 13 THEN 'Children (0-12)'
+    WHEN age < 18 THEN 'Teens (13-17)'
+    WHEN age < 35 THEN 'Young Adults (18-34)'
+    WHEN age < 60 THEN 'Adults (35-59)'
+    ELSE 'Seniors (60+)'
+  END
     `);
 
     // Most common problems (NO CHANGE needed)

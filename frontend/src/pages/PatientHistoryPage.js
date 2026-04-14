@@ -15,7 +15,7 @@ const STATUS_DOT = {
 };
 
 export default function PatientHistoryPage() {
-  const { mobile } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -25,14 +25,14 @@ export default function PatientHistoryPage() {
     setLoading(true);
     setError('');
     try {
-      const res = await getPatientHistory(mobile);
+      const res = await getPatientHistory(id);
       setData(res.data);
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to load patient history');
     } finally {
       setLoading(false);
     }
-  }, [mobile]);
+  }, [id]);
 
   useEffect(() => { fetchData(); }, [fetchData]);
 

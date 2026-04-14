@@ -62,7 +62,7 @@ export default function App() {
             <Route path="queue" element={<QueuePage />} />
             <Route path="search" element={<SearchPage />} />
             <Route path="patients" element={<PatientsListPage />} />
-            <Route path="patient/:mobile" element={<PatientHistoryPage />} />
+           <Route path="patient/:id" element={<PatientHistoryPage />} />
             <Route path="visit/:id" element={<VisitPage />} />
           </Route>
 

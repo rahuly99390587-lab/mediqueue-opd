@@ -388,35 +388,30 @@ try {
 });
 
 // GET /api/patient/:mobile/history
-// ✅ NEW (correct)
-app.get('/api/patient/id/:id/history', requireAuth, async (req, res) => {
-  try {
-    const patient = await dbGet(
-      'SELECT * FROM patients WHERE id = $1',
-      [req.params.id]
-    );
+app.get('/api/patient/:mobile/history', requireAuth, async (req, res) => {
+try {
+  const patient = await dbGet('SELECT * FROM patients WHERE mobile = $1', [req.params.mobile]);
+  if (!patient) return sendError(res, 'Patient not found', 404);
 
-    if (!patient) return sendError(res, 'Patient not found', 404);
+  const visits = await dbAll(
+    'SELECT * FROM visits WHERE patient_id = $1 ORDER BY visit_date DESC, id DESC',
+    [patient.id]
+  );
 
-    const visits = await dbAll(
-      'SELECT * FROM visits WHERE patient_id = $1 ORDER BY created_at DESC',
-      [req.params.id]
-    );
+  const visitCount = visits.length;
+  const isFrequent = visitCount > 5;
+  const lastVisit = visits[0] || null;
 
-    const visitCount = visits.length;
-    const isFrequent = visitCount > 5;
-    const lastVisit = visits[0] || null;
+  const previousMedicines = visits
+    .filter(v => v.medicines?.trim())
+    .slice(0, 3)
+    .map(v => ({ date: v.visit_date, diagnosis: v.diagnosis, medicines: v.medicines }));
 
-    const previousMedicines = visits
-      .filter(v => v.medicines?.trim())
-      .slice(0, 3)
-      .map(v => ({ date: v.visit_date, diagnosis: v.diagnosis, medicines: v.medicines }));
-
-    sendSuccess(res, { patient, visits, visitCount, isFrequent, lastVisit, previousMedicines });
-  } catch (err) {
-    console.error('History error:', err);
-    sendError(res, 'Failed to load patient history', 500);
-  }
+  sendSuccess(res, { patient, visits, visitCount, isFrequent, lastVisit, previousMedicines });
+} catch (err) {
+  console.error('History error:', err);
+  sendError(res, 'Failed to load patient history', 500);
+}
 });
 
 // GET /api/visit/:id

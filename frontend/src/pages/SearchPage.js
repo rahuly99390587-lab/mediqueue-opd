@@ -176,7 +176,7 @@ export default function SearchPage() {
             {results.map((r) => (
               <button
                 key={r.id}
-                onClick={() => navigate(`/admin/patient/${r.patient_id}`)}
+                onClick={() => navigate(`/admin/visit/${r.id}`)}
                 className="w-full bg-white rounded-2xl border border-slate-100 shadow-card hover:shadow-card-hover hover:-translate-y-px transition-all duration-200 flex items-center gap-4 p-4 text-left group"
               >
                 {/* Token */}

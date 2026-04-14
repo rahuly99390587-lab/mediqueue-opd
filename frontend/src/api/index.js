@@ -69,8 +69,8 @@ export const getTodayQueue = (status) =>
 export const searchPatients = (q, type, date) =>
   api.get('/api/search', { params: { q, type, date } });
 
-export const getPatientHistory = (id) =>
-  api.get(`/api/patient/id/${id}/history`);
+export const getPatientHistory = (mobile) =>
+  api.get(`/api/patient/${mobile}/history`);
 
 export const getVisit = (id) =>
   api.get(`/api/visit/${id}`);
